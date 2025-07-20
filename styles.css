@@ -1,32 +1,114 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  padding: 20px;
-  margin: 0;
+:root{
+  --grey-100:#f2f2f2; 
+    --grey-200:#393e46;/*copied from she code*/
+--grey-300:#222831;
+--orange-100:#f96d00;
+
 }
-header {
-  text-align: center;
-  margin-bottom: 30px;
+body{
+  background-color: var(--grey-100);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+overflow: hidden;
 }
-h1 {
-  font-size: 2rem;
-  color: #333;
+header{
+display:flex;
+align-items: center;
+justify-content: center;
+
+
 }
-put#guestinput {
-  flex: 1;
-  padding: 10px;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 5px;
+main{
+  border:1px solid var(--orange-100);
+  box-shadow: box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;/*copied from css scan*/
+    width: 100%;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  height:70vh;
+}
+#todoList{
+  align-items: center;
+  min-height : 500px;
+  width:100%;
+  padding: 0px;
+
+
+}
+#todoList li{
+  display:flex;
+  border: 1px solid;
+  justify-content: space-around;
+  margin:10px;
+    overflow:scroll;/*text will be scrolled if its big or overflow*/
+
 }
 
-button {
-  padding: 10px 15px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background: #1976d2;
-  color: white;
+.btn{
   cursor: pointer;
-  transition: background 0.3s;
+  border:1px solid var(--orange-100);
+  border-radius: 10px;
+  text-transform: uppercase;
+  padding: 10px;
+  background-color: var(--orange-100);
+  
 }
+.btn.hover{
+background-color: var(--grey-200);
+color:var(--orange-100);
+border-color: var(--grey-300);
+}
+
+
+.first-color { 
+	background: #222831; 
+}
+	
+.second-color { 
+	background: #393e46; 
+}
+
+.third-color { 
+	background: #f96d00; 
+}
+
+.fourth-color { 
+	background: #f2f2f2; 
+}
+
+#todoList li{
+  transition: all 0.3s easy;/*I am adding transition to all the properties */
+}
+.fade-in{ /*declaring a class*/
+  opacity: 0;/*  padding*/
+  transform: translateY(-10px);/* translate class 10px up*/
+  color:red;
+  animation: fadeIn 0.3s forwards;
+}
+@keyframes fadeIn {
+  to{
+    opacity:1;
+    transform: translateY(0);
+    color:green;
+  }
+} /* <-- Add this closing brace for @keyframes fadeIn */
+
+ /* adding animation name, here referencing animation */
+.fade-out {
+  opacity: 1;
+  transform: translate(0);
+  animation: fadeOut 0.3s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+
+
