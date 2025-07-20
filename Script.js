@@ -2,7 +2,7 @@ const dialog = document.getElementById("dialog");
 const showTodoFormBtn = document.getElementById("showTodoFormBtn");
 const todoList = document.getElementById("todoList");
 const todoForm = document.getElementById("todoForm");
-const closeDialogBtn = document.getElementById("closeDialogBtn");
+const RemoveDialogBtn = document.getElementById("RemoveDialogBtn");
 const textarea=document.getElementById("todo");
 const progressBar=document.getElementById("dialogclosingTimer");
 const closeDialogTime=5000;
@@ -20,7 +20,6 @@ showTodoFormBtn.addEventListener("click", ()=>{
     let timeLeft=closeDialogTime;
   progressBar.max=closeDialogTime;
   IntervalId=setInterval(() => {
-    console.log("executed");//Here fucntion is excuted n number of times so progress bar is updated everytime when we try to open form
     timeLeft -= 100;
     progressBar.value = timeLeft;
   }, 100);
@@ -31,7 +30,7 @@ showTodoFormBtn.addEventListener("click", ()=>{
   },closeDialogTime)
   clear
 });
-closeDialogBtn.addEventListener("click", ()=>{
+RemoveDialogBtn.addEventListener("click", ()=>{
   onDialogcloseHandler();
     dialog.close();
 
@@ -41,18 +40,25 @@ todoForm.addEventListener("submit", () => {
   const newTodoContainer = document.createElement("li");
   const todoText = document.createElement("p");
   const timestamp = document.createElement("p");
-  const deleteBtn = document.createElement("button");
+  const RemoveBtn = document.createElement("button");
+  const ConfirmBtn=document.createElement("button");
 
-  deleteBtn.addEventListener("click", ()=> {
+  RemoveBtn.addEventListener("click", ()=> {
     newTodoContainer.classList.add("fade-In")
         newTodoContainer.classList.add("fade-Out")
   setTimeout(()=>{
     newTodoContainer.remove();
   },300)
 });
-
-deleteBtn.innerHTML="delete";
-deleteBtn.classList.add("btn");//The classList property returns the CSS classnames of an element.
+ConfirmBtn.addEventListener("click", ()=> {
+    newTodoContainer.classList.add("fade-In")
+        newTodoContainer.classList.add("fade-Out")
+  setTimeout(()=>{
+    newTodoContainer.remove();
+  },300)
+});
+  ConfirmBtn.innerHTML = "Confirm ✅";
+RemoveBtn.innerHTML="Remove";
 
 
   const currentDate = new Date();
@@ -60,7 +66,7 @@ deleteBtn.classList.add("btn");//The classList property returns the CSS classnam
   todoText.innerHTML = textarea.value;
   timestamp.innerHTML = currentDate.toLocaleDateString();
 
-  newTodoContainer.append(todoText, timestamp, deleteBtn);
+  newTodoContainer.append(todoText, timestamp, ConfirmBtn, RemoveBtn);
   todoList.prepend(newTodoContainer);
 
 onDialogcloseHandler();

@@ -5,6 +5,7 @@
 --orange-100:#f96d00;
 
 }
+
 body{
   background-color: var(--grey-100);
   display: flex;
@@ -43,17 +44,19 @@ main{
   border: 1px solid;
   justify-content: space-around;
   margin:10px;
-    overflow:scroll;/*text will be scrolled if its big or overflow*/
+  btn
+  /*text will be scrolled if its big or overflow*/
 
 }
 
 .btn{
   cursor: pointer;
   border:1px solid var(--orange-100);
-  border-radius: 10px;
+  border-radius: 20px;
   text-transform: uppercase;
   padding: 10px;
   background-color: var(--orange-100);
+  white-space: 10px;
   
 }
 .btn.hover{
@@ -62,25 +65,9 @@ color:var(--orange-100);
 border-color: var(--grey-300);
 }
 
-
-.first-color { 
-	background: #222831; 
-}
-	
-.second-color { 
-	background: #393e46; 
-}
-
-.third-color { 
-	background: #f96d00; 
-}
-
-.fourth-color { 
-	background: #f2f2f2; 
-}
-
 #todoList li{
   transition: all 0.3s easy;/*I am adding transition to all the properties */
+  background-color: lightblue;
 }
 .fade-in{ /*declaring a class*/
   opacity: 0;/*  padding*/
