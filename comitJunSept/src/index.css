@@ -1,0 +1,12 @@
+:root{
+  --white:#fff;
+
+}
+body{
+  padding:0px;
+  margin:0px;
+  font-family: "Gins Sills","Gill sans mt";
+}
+.header{
+  color:red;
+}

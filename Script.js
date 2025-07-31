@@ -2,74 +2,124 @@ const dialog = document.getElementById("dialog");
 const showTodoFormBtn = document.getElementById("showTodoFormBtn");
 const todoList = document.getElementById("todoList");
 const todoForm = document.getElementById("todoForm");
-const RemoveDialogBtn = document.getElementById("RemoveDialogBtn");
-const textarea=document.getElementById("todo");
-const progressBar=document.getElementById("dialogclosingTimer");
-const closeDialogTime=5000;
-  let IntervalId;
-  let timeoutId;
-  const onDialogcloseHandler=()=>{
-    dialog.close();
-    clearInterval(IntervalId);  //stop a timer that was previously established using the setInterval() method
-    clearTimeout(timeoutId);
-    textarea.value="";
-  }
+const closeDialogBtn = document.getElementById("closeDialogBtn");
+const textarea = document.getElementById("todo");
+const progressBar = document.getElementById("dialogClosingTimer");
+const closeDialogTime = 150000;
 
-showTodoFormBtn.addEventListener("click", ()=>{
+let editingTodoElement;
+let intervalId;
+let timeoutId;
+
+const onDialogCloseHandler = () => {
+  dialog.close();
+  clearInterval(intervalId);
+  clearTimeout(timeoutId);
+  textarea.value = "";
+};
+
+const onDialogOpenHandler = () => {
   dialog.showModal();
-    let timeLeft=closeDialogTime;
-  progressBar.max=closeDialogTime;
-  IntervalId=setInterval(() => {
+  let timeLeft = closeDialogTime;
+  progressBar.max = closeDialogTime;
+
+  intervalId = setInterval(() => {//progress bar go down every 100sec and settimeout fun will be executed after setinterval
     timeLeft -= 100;
     progressBar.value = timeLeft;
   }, 100);
-    timeoutId=setTimeout(()=>{
-    textarea.value="";
-    onDialogcloseHandler();
-    timeLeft=closeDialogTime;
-  },closeDialogTime)
-  clear
-});
-RemoveDialogBtn.addEventListener("click", ()=>{
-  onDialogcloseHandler();
-    dialog.close();
 
-});
+  timeoutId = setTimeout(() => {
+    onDialogCloseHandler();
+    timeLeft = closeDialogTime;
+  }, closeDialogTime);
+};
 
-todoForm.addEventListener("submit", () => { 
+const createBtn = (buttonText, classes) => {
+  const btn = document.createElement("button");
+
+  btn.innerHTML = buttonText;
+  btn.classList.add("btn");
+
+  if (classes && classes.length > 0) {
+    btn.classList.add(classes);
+  }
+
+  return btn;
+};
+
+const onNewTodoSaveHandler = (userInput) => {
   const newTodoContainer = document.createElement("li");
+  const textContainer = document.createElement("div");
   const todoText = document.createElement("p");
+  const actionContainer = document.createElement("div");
   const timestamp = document.createElement("p");
-  const RemoveBtn = document.createElement("button");
-  const ConfirmBtn=document.createElement("button");
+  const deleteBtn = createBtn("x", "danger");
+  const editBtn = createBtn("edit", "primary");
 
-  RemoveBtn.addEventListener("click", ()=> {
-    newTodoContainer.classList.add("fade-In")
-        newTodoContainer.classList.add("fade-Out")
-  setTimeout(()=>{
-    newTodoContainer.remove();
-  },300)
-});
-ConfirmBtn.addEventListener("click", ()=> {
-    newTodoContainer.classList.add("fade-In")
-        newTodoContainer.classList.add("fade-Out")
-  setTimeout(()=>{
-    newTodoContainer.remove();
-  },300)
-});
-  ConfirmBtn.innerHTML = "Confirm ✅";
-RemoveBtn.innerHTML="Remove";
+  newTodoContainer.classList.add("fade-in");
 
+  deleteBtn.addEventListener("click", () => {
+    newTodoContainer.classList.remove("fade-in");
+    newTodoContainer.classList.add("fade-out");
 
-  const currentDate = new Date();
+    setTimeout(() => {
+      newTodoContainer.remove();
+    }, 300);
+  });
 
-  todoText.innerHTML = textarea.value;
-  timestamp.innerHTML = currentDate.toLocaleDateString();
+  editBtn.addEventListener("click", () => {
+    textarea.value = todoText.innerHTML;
+    editingTodoElement = newTodoContainer;
+    onDialogOpenHandler();
+  });
 
-  newTodoContainer.append(todoText, timestamp, ConfirmBtn, RemoveBtn);
+  todoText.innerHTML = userInput;
+  timestamp.innerHTML = new Date().toLocaleDateString();
+  timestamp.classList.add("timestamp");
+
+  textContainer.classList.add("text-container");
+  actionContainer.classList.add("action-container");
+
+  textContainer.append(todoText);
+  actionContainer.append(timestamp, editBtn, deleteBtn);
+
+  newTodoContainer.append(textContainer, actionContainer);
+
   todoList.prepend(newTodoContainer);
+};
 
-onDialogcloseHandler();
+const onEditedTodoSaveHandler = (userInput) => { //It updates an existing todo item after the user edits it.
+  const textNode = editingTodoElement.querySelector("p");
+  const timestampNode = editingTodoElement.querySelector(".timestamp");
+
+  textNode.innerHTML = userInput;
+  timestampNode.innerHTML = new Date().toLocaleDateString();
+
+  editingTodoElement.classList.add("edited");
+  setTimeout(() => {
+    editingTodoElement.classList.remove("edited");
+    editingTodoElement = null;
+  }, 300);
+};
+
+showTodoFormBtn.addEventListener("click", onDialogOpenHandler);
+
+closeDialogBtn.addEventListener("click", onDialogCloseHandler);
+
+todoForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const userInput = textarea.value.trim(); // trim remove white spaces
+
+  if (!userInput) {
+    alert("Your todo is empty. Please provide a value before saving it.");
+    return;
+  }
+
+  if (editingTodoElement) {
+    onEditedTodoSaveHandler(userInput);
+  } else {
+    onNewTodoSaveHandler(userInput);
+  }
+
+  onDialogCloseHandler();
 });
-
-//As a user I want a todo form dialog to be closed after a five seconds

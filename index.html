@@ -1,29 +1,35 @@
-<!DOCTYPE html><!--Sunitha Obblareddy-->
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <script src="/script.js" type="module" defer></script>
-    <link rel="stylesheet" href="styles.css">
-    <title>Guest List APP</title>
+    <title>COMIT TODO APP</title>
   </head>
   <body>
     <header>
-      <h1>Guess List APP</h1>
+      <h1>comITodo'S</h1>
     </header>
     <main>
-          <button class="btn" id="showTodoFormBtn">+ADD</button>
+      <button class="btn primary" id="showTodoFormBtn">+ ADD</button>
       <ul id="todoList"></ul>
-      </main>
-      <dialog id="dialog">
-      <button class="btn" id ="RemoveDialogBtn">X</button>
+    </main>
+    <dialog id="dialog">
+      <div class="dialog-close-btn-container">
+        <button class="btn danger" id="closeDialogBtn">X</button>
+      </div>
       <form id="todoForm" method="dialog">
-        <progress id="dialogclosingTimer"></progress>
-        <textarea id="todo" name=""
+        <textarea
+          placeholder="enter your todo here"
+          rows="5"
+          cols="70"
+          name=""
+          id="todo"
         ></textarea>
-        <input class="btn" type="submit" value="submit"/>
+        <input class="btn primary" type="submit" value="save" />
+        <progress id="dialogClosingTimer"></progress>
       </form>
     </dialog>
-    </body>
+  </body>
 </html>
-
